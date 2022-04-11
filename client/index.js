@@ -1,5 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-    loadHTMLtable([]);
+    fetch('http://localhost:5000/getAll')
+        // Convert response into json:
+        .then((response) => response.json())
+        // Logging the data received in json format:
+        .then((data) => loadHTMLtable(data['data'])); // data object and key from the result variable in app.js
 });
 
 function loadHTMLtable(data) {
