@@ -1,0 +1,28 @@
+* {
+    box-sizing: border-box;
+}
+
+main {
+    width: 75%;
+    margin: 5rem auto;
+    text-align: center;
+}
+table {
+    margin: 3rem auto;
+}
+table,
+th,
+td {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+th,
+td {
+    padding: 0.5rem;
+}
+
+#name-input,
+#search-input {
+    margin: 1.5rem 0;
+}
