@@ -7,9 +7,11 @@ main {
     margin: 5rem auto;
     text-align: center;
 }
+
 table {
     margin: 3rem auto;
 }
+
 table,
 th,
 td {
@@ -25,4 +27,8 @@ td {
 #name-input,
 #search-input {
     margin: 1.5rem 0;
+}
+
+.no-data {
+    justify-content: center;
 }
