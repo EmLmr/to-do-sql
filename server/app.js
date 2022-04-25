@@ -15,6 +15,16 @@ app.use(express.json());
 // Not sending any form data.
 app.use(express.urlencoded({ extended: false }));
 
+// CREATE.
+app.post('/insert', (request, response) => {
+    const task = request.body.task;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.insertNewTask(task);
+
+    result.then((data) => response.json({ success: true })).catch((err) => console.log(err));
+});
+
 // READ.
 app.get('/getAll', (request, response) => {
     const db = dbService.getDbServiceInstance();
