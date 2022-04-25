@@ -6,6 +6,29 @@ document.addEventListener('DOMContentLoaded', function () {
         .then((data) => loadHTMLtable(data['data'])); // data object and key from the result variable in app.js
 });
 
+// Add event listeners to Delete and Edit buttons.
+document.querySelector('table tbody').addEventListener('click', function (event) {
+    console.log(event.target);
+
+    // Delete.
+    if (event.target.className === 'delete-row-btn') {
+        deleteRowById(event.target.dataset.id);
+    }
+});
+
+// DELETE data.
+function deleteRowById(id) {
+    fetch('http://localhost:5000/delete/' + id, {
+        method: 'DELETE',
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+}
+
 // CREATE data.
 const addBtn = document.getElementById('add-task-btn');
 
