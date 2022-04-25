@@ -26,7 +26,7 @@ class DbService {
     static getDbServiceInstance() {
         return instance ? instance : new DbService();
     }
-
+    // READ
     async getAllData() {
         try {
             // If query is successful, resolve it, otherwise reject it. Then show error.
@@ -43,6 +43,31 @@ class DbService {
 
             // console.log(response);
             return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // CREATE
+    async insertNewTask(task) {
+        try {
+            const dateAdded = new Date();
+            // If query is successful, resolve it, otherwise reject it. Then show error.
+            const insertId = await new Promise((resolve, reject) => {
+                const query = 'INSERT INTO  tasks (task, date_added) VALUES (?,?);';
+
+                connection.query(query, [task, dateAdded], (err, result) => {
+                    // If error, create a new Error object and pass the error msg.
+                    if (err) reject(new Error(err.message));
+                    // else, pass results.
+                    resolve(result.insertId);
+                });
+            });
+            return {
+                id: insertId,
+                task: task,
+                dateAdded: dateAdded,
+            };
         } catch (error) {
             console.log(error);
         }
