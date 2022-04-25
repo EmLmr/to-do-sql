@@ -14,6 +14,10 @@ document.querySelector('table tbody').addEventListener('click', function (event)
     if (event.target.className === 'delete-row-btn') {
         deleteRowById(event.target.dataset.id);
     }
+    // Update.
+    if (event.target.className === 'edit-row-btn') {
+        editRowById(event.target.dataset.id);
+    }
 });
 
 // DELETE data.
@@ -27,6 +31,12 @@ function deleteRowById(id) {
                 location.reload();
             }
         });
+}
+
+// UPDATE data.
+function editRowById(id) {
+    const updateSection = document.getElementById('update-row');
+    updateSection.hidden = false;
 }
 
 // CREATE data.
