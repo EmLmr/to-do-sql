@@ -6,8 +6,47 @@ document.addEventListener('DOMContentLoaded', function () {
         .then((data) => loadHTMLtable(data['data'])); // data object and key from the result variable in app.js
 });
 
+// CREATE data.
+const addBtn = document.getElementById('add-task-btn');
+
+addBtn.onclick = function () {
+    const taskInput = document.getElementById('task-input');
+    const task = taskInput.value;
+    taskInput.value = '';
+
+    fetch('http://localhost:5000/insert', {
+        headers: {
+            'Content-type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify({ task: task }),
+    })
+        .then((response) => response.json())
+        .then((data) => insertRowIntoTable(data['data']));
+};
+
+function insertRowIntoTable(data) {}
+
+// READ data.
 function loadHTMLtable(data) {
     const table = document.querySelector('table tbody');
 
-    if (data.length === 0) table.innerHTML = '<tr><td class="no-data" colspan="5">No data</tr></td>';
+    if (data.length === 0) {
+        table.innerHTML = '<tr><td class="no-data" colspan="5">No data</tr></td>';
+    }
+
+    let tableHtml = '';
+
+    // Create row for each task.
+    data.forEach(function ({ id, task, date_added }) {
+        tableHtml += '<tr>';
+        tableHtml += `<td>${id}</td>`;
+        tableHtml += `<td>${task}</td>`;
+        tableHtml += `<td>${new Date(date_added).toLocaleString()}</td>`;
+        tableHtml += `<td><button class="delete-row-btn" data-id=${id}>Delete</button></td>`;
+        tableHtml += `<td><button class="edit-row-btn" data-id=${id}>Edit</button></td>`;
+        tableHtml += '</tr>';
+    });
+
+    table.innerHTML = tableHtml;
 }
