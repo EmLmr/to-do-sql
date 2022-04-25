@@ -22,7 +22,7 @@ app.post('/insert', (request, response) => {
 
     const result = db.insertNewTask(task);
 
-    result.then((data) => response.json({ success: true })).catch((err) => console.log(err));
+    result.then((data) => response.json({ data: data })).catch((err) => console.log(err));
 });
 
 // READ.

@@ -25,7 +25,31 @@ addBtn.onclick = function () {
         .then((data) => insertRowIntoTable(data['data']));
 };
 
-function insertRowIntoTable(data) {}
+function insertRowIntoTable(data) {
+    const table = document.querySelector('table tbody');
+    const tableHasData = table.querySelector('no-data');
+
+    let tableHtml = '<tr>';
+
+    for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+            if (key === 'dateAdded') {
+                data[key] = new Date(data[key]).toLocaleString();
+            }
+            tableHtml += `<td>${data[key]}</td>`;
+        }
+    }
+    tableHtml += `<td><button class="delete-row-btn" data-id=${data.id}>Delete</button></td>`;
+    tableHtml += `<td><button class="edit-row-btn" data-id=${data.id}>Edit</button></td>`;
+    tableHtml += '</tr>';
+
+    if (tableHasData) {
+        table.innerHTML = tableHtml;
+    } else {
+        const newRow = table.insertRow();
+        newRow.innerHTML = tableHtml;
+    }
+}
 
 // READ data.
 function loadHTMLtable(data) {
@@ -37,7 +61,7 @@ function loadHTMLtable(data) {
 
     let tableHtml = '';
 
-    // Create row for each task.
+    // Row format for each new task.
     data.forEach(function ({ id, task, date_added }) {
         tableHtml += '<tr>';
         tableHtml += `<td>${id}</td>`;
