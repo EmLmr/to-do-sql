@@ -33,4 +33,13 @@ app.get('/getAll', (request, response) => {
     result.then((data) => response.json({ data: data })).catch((err) => console.log(err));
 });
 
+// DELETE.
+app.delete('/delete/:id', (request, response) => {
+    const id = request.params.id;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.deleteRowById(id);
+    result.then((data) => response.json({ success: data })).catch((err) => console.log(err));
+});
+
 app.listen(process.env.PORT, () => console.log('To-do app is running'));
