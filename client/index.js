@@ -20,7 +20,18 @@ document.querySelector('table tbody').addEventListener('click', function (event)
     }
 });
 
-const updateBtn = document.getElementById('update-row-btn'); // is placed right before deleteRowById in tuto
+// Search function.
+const searchBtn = document.getElementById('search-btn');
+
+searchBtn.onclick = function () {
+    const searchValue = document.getElementById('search-input').value;
+
+    fetch('http://localhost:5000/search/' + searchValue)
+        // Convert response into json:
+        .then((response) => response.json())
+        // Logging the data received in json format:
+        .then((data) => loadHTMLtable(data['data'])); // data object and key from the result variable in app.js
+};
 
 // DELETE data.
 function deleteRowById(id) {
@@ -36,6 +47,8 @@ function deleteRowById(id) {
 }
 
 // UPDATE data.
+const updateBtn = document.getElementById('update-row-btn');
+
 function handleEditRow(id) {
     const updateSection = document.getElementById('update-row');
     updateSection.hidden = false;

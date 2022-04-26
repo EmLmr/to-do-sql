@@ -51,4 +51,13 @@ app.delete('/delete/:id', (request, response) => {
     result.then((data) => response.json({ success: data })).catch((err) => console.log(err));
 });
 
+// Search.
+app.get('/search/:task', (request, response) => {
+    const task = request.params.task;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.searchTask(task);
+    result.then((data) => response.json({ data: data })).catch((err) => console.log(err));
+});
+
 app.listen(process.env.PORT, () => console.log('To-do app is running'));
