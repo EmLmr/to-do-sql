@@ -31,6 +31,14 @@ searchBtn.onclick = function () {
         .then((response) => response.json())
         // Logging the data received in json format:
         .then((data) => loadHTMLtable(data['data'])); // data object and key from the result variable in app.js
+
+    // Display "Show all" button
+    const showAllBtn = document.getElementById('show-all-btn');
+    showAllBtn.hidden = false;
+    //  Refresh page to show all tasks.
+    showAllBtn.onclick = function () {
+        location.reload();
+    };
 };
 
 // DELETE data.
