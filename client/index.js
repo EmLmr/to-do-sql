@@ -16,9 +16,11 @@ document.querySelector('table tbody').addEventListener('click', function (event)
     }
     // Update.
     if (event.target.className === 'edit-row-btn') {
-        editRowById(event.target.dataset.id);
+        handleEditRow(event.target.dataset.id);
     }
 });
+
+const updateBtn = document.getElementById('update-row-btn'); // is placed right before deleteRowById in tuto
 
 // DELETE data.
 function deleteRowById(id) {
@@ -34,10 +36,32 @@ function deleteRowById(id) {
 }
 
 // UPDATE data.
-function editRowById(id) {
+function handleEditRow(id) {
     const updateSection = document.getElementById('update-row');
     updateSection.hidden = false;
+    // Mirror task id in button.
+    document.getElementById('update-task-input').dataset.id = id;
 }
+
+updateBtn.onclick = function () {
+    const updateTaskInput = document.getElementById('update-task-input');
+    fetch('http://localhost:5000/update', {
+        headers: {
+            'Content-type': 'application/json',
+        },
+        method: 'PATCH',
+        body: JSON.stringify({
+            id: updateTaskInput.dataset.id,
+            task: updateTaskInput.value,
+        }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+};
 
 // CREATE data.
 const addBtn = document.getElementById('add-task-btn');
