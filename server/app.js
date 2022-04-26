@@ -33,6 +33,15 @@ app.get('/getAll', (request, response) => {
     result.then((data) => response.json({ data: data })).catch((err) => console.log(err));
 });
 
+// UPDATE.
+app.patch('/update', (request, response) => {
+    const { id, task } = request.body; // destructuring of request.body.id/nqme for shorter code
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.updateTaskById(id, task);
+    result.then((data) => response.json({ success: data })).catch((err) => console.log(err));
+});
+
 // DELETE.
 app.delete('/delete/:id', (request, response) => {
     const id = request.params.id;
