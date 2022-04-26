@@ -119,6 +119,26 @@ class DbService {
             return false;
         }
     }
+
+    async searchTask(task) {
+        try {
+            // If query is successful, resolve it, otherwise reject it. Then show error.
+            const response = await new Promise((resolve, reject) => {
+                const query = 'SELECT * FROM tasks WHERE task = ?;';
+
+                connection.query(query, [task], (err, results) => {
+                    // If error, create a new Error object and pass the error msg.
+                    if (err) reject(new Error(err.message));
+                    // else, pass results.
+                    resolve(results);
+                });
+            });
+
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
 
 module.exports = DbService;
